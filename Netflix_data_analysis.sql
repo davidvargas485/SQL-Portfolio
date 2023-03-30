@@ -49,7 +49,7 @@ FROM
 ORDER BY
     title ASC;
 
---Who was the Director for the movie Bright Star?
+#4. Who was the Director for the movie Bright Star?
 
 SELECT
     director
@@ -62,7 +62,7 @@ ON
 WHERE 
     titles.title LIKE '%Bright Star%';
 
---What is the oldest movie in the database and what year was it made?
+#5. What is the oldest movie in the database and what year was it made?
 
 SELECT
     title,
