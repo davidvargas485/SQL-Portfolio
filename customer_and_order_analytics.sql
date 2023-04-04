@@ -1,3 +1,5 @@
+# In this SQL, I'm querying a database with customer and order data in multiple tables to answer questions that stakeholders may have.
+
 #1. How many orders were placed in January?
 
 SELECT
