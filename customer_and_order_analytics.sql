@@ -41,7 +41,7 @@ ORDER BY
 #4. Which product was the cheapest one sold in January, and what was the price?
 
 SELECT
-    Product,
+    product,
     price
 FROM
     BIT_DB.JanSales
@@ -49,7 +49,7 @@ WHERE
     length(orderID) = 6 AND 
     orderID <> 'Order ID'
 GROUP BY
-    Product
+    product
 ORDER BY
     price ASC
 LIMIT 1;
@@ -57,7 +57,7 @@ LIMIT 1;
 /* Let's double check in case there is another product with the same price */
 
 SELECT
-    Product,
+    product,
     price
 FROM
     BIT_DB.JanSales
@@ -68,32 +68,32 @@ WHERE
         (SELECT MIN(price) 
         FROM BIT_DB.JanSales)
 GROUP BY
-    Product;
+    product;
 
 #5. What is the total revenue for each product sold in January? 
     
 SELECT
-    Product,
-    ROUND((SUM(Quantity)*price),2) AS Revenue
+    product,
+    ROUND((SUM(Quantity)*price),2) AS revenue
 FROM
     BIT_DB.JanSales
 WHERE
     length(orderID) = 6 AND 
     orderID <> 'Order ID'
 GROUP BY
-    Product
+    product
 ORDER BY
     revenue DESC;
 
 #6. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
 
 SELECT
-    Product,
-    (num_sold * price) AS Revenue
+    product,
+    (num_sold * price) AS revenue
 FROM
     (SELECT
-        Product,
-        SUM(Quantity) AS num_sold,
+        product,
+        SUM(quantity) AS num_sold,
         price
     FROM
         BIT_DB.FebSales
@@ -102,7 +102,7 @@ FROM
         orderID <> 'Order ID' AND
         location LIKE '%548 Lincoln St, Seattle, WA 98101%'
     GROUP BY
-        Product) AS product_info
+        product) AS product_info
 ORDER BY
     revenue;
 
@@ -110,7 +110,7 @@ ORDER BY
 
 SELECT
     COUNT(acctnum) AS num_customers,
-    ROUND(AVG(Quantity * price),2) AS avg_spent
+    ROUND(AVG(quantity * price),2) AS avg_spent
 FROM
     BIT_DB.FebSales AS febsales
 LEFT JOIN
@@ -120,7 +120,7 @@ ON
 WHERE
     length(orderID) = 6 AND 
     orderID <> 'Order ID' AND
-    Quantity > 2;
+    quantity > 2;
 
 /* Let's double check to verify that there 278 customers who purchased more than 2 of a product in one order */
 
@@ -131,7 +131,7 @@ FROM
 WHERE
     length(orderID) = 6 AND 
     orderID <> 'Order ID' AND
-    Quantity > 2;
+    quantity > 2;
 
 /* There are only 263 orders in the FebSales table where the quantity is more than 2 */
 /* This should not be the case. I was expecting there to be 278 orders, since there are 278 rows in the below query */
@@ -147,7 +147,7 @@ ON
 WHERE
     length(orderID) = 6 AND 
     orderID <> 'Order ID' AND
-    Quantity > 2;
+    quantity > 2;
 
 /* After exporting the output of the above table, and importing it into Excel for inspection, it appears that there are duplicate orderID's */
 /* This means that multiple account numbers are linked to the same order ID, which should not be the case. */
@@ -162,7 +162,7 @@ LEFT JOIN
 ON
     customers.order_id = febsales.orderID
 WHERE
-    Quantity > 2 AND
+    quantity > 2 AND
     orderID = 155130;
 
 /* As you can see, there are two account numbers linked to one order. There are multiple instances where this is the case. */
@@ -171,8 +171,8 @@ WHERE
 #8. List all the products sold in Los Angeles in February, and include how many of each were sold.
 
 SELECT
-    Product,
-    SUM(Quantity) AS total_sold
+    product,
+    SUM(quantity) AS total_sold
 FROM
     BIT_DB.FebSales
 WHERE
@@ -180,7 +180,7 @@ WHERE
     orderID <> 'Order ID' AND
     location LIKE '%Los Angeles%'
 GROUP BY
-    Product
+    product
 ORDER BY
     total_sold DESC;
 
@@ -205,14 +205,14 @@ ORDER BY
 #10. How many of each type of headphone were sold in February?
 
 SELECT
-    Product,
-    SUM(Quantity) AS num_sold
+    product,
+    SUM(quantity) AS num_sold
 FROM
     BIT_DB.FebSales
 WHERE
-    Product LIKE '%Headphone%'
+    product LIKE '%Headphone%'
 GROUP BY
-    Product
+    product
 ORDER BY
     num_sold DESC;
 
@@ -247,14 +247,14 @@ WHERE
 #13. Which product brought in the most revenue in January and how much revenue did it bring in total?
 
 SELECT
-    Product,
+    product,
     MAX(revenue) AS revenue
 FROM 
     (SELECT
-        Product,
-        ROUND(SUM(Quantity)*Price,2) AS revenue
+        product,
+        ROUND(SUM(quantity)*Price,2) AS revenue
     FROM
         BIT_DB.JanSales
     GROUP BY
-        Product) AS A;
+        product) AS A;
 
