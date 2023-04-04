@@ -168,4 +168,19 @@ WHERE
 /* As you can see, there are two account numbers linked to one order. There are multiple instances where this is the case. */
 /* There was most likely a flaw in the data collection process for this dataset. */
 
+#8. List all the products sold in Los Angeles in February, and include how many of each were sold.
+
+SELECT
+    Product,
+    SUM(Quantity) AS total_sold
+FROM
+    BIT_DB.FebSales
+WHERE
+    length(orderID) = 6 AND
+    orderID <> 'Order ID' AND
+    location LIKE '%Los Angeles%'
+GROUP BY
+    Product
+ORDER BY
+    total_sold DESC;
 
