@@ -1,4 +1,4 @@
-# Show Customers (their full names, customer ID, and country) who are not in the US. (Hint: != or <> can be used to say "is not equal to").
+#1. Show Customers (their full names, customer ID, and country) who are not in the US. (Hint: != or <> can be used to say "is not equal to").
 
 SELECT 
     FirstName || ' ' || LastName AS fullname,
@@ -9,7 +9,7 @@ FROM
 WHERE
     country NOT LIKE '%USA%';
 
-# Show only the customers from Argentina.
+#2. Show only the customers from Argentina.
 
 SELECT 
     FirstName || ' ' || LastName AS fullname,
@@ -20,7 +20,7 @@ FROM
 WHERE
     country LIKE '%Argentina%';
 
-# Find the Invoices of customers who are from Brazil. 
+#3. Find the Invoices of customers who are from Brazil. 
 
 SELECT
     invoices.InvoiceID,
@@ -39,7 +39,7 @@ WHERE
 ORDER BY
     invoices.InvoiceDate;
     
-# Show the Employees who are Sales Agents.
+#4. Show the Employees who are Sales Agents.
 
 SELECT
     FirstName || ' ' || LastName AS fullname,
@@ -49,7 +49,7 @@ FROM
 WHERE
     title LIKE '%Agent%';
 
-# Extract a list of countries from which purchases have been made.
+#5. Extract a list of countries from which purchases have been made.
 
 SELECT
     DISTINCT BillingCountry AS country
@@ -58,7 +58,7 @@ FROM
 ORDER BY
     country;
 
-# Which countries have the most invoices and how much did they spend?
+#6. Which countries have the most invoices and how much did they spend?
 
 SELECT
     BillingCountry AS country,
@@ -72,7 +72,7 @@ ORDER BY
     total_spent DESC,
     num_invoices DESC;
 
-# Which customers have made the most orders and how much did they spend?
+#7. Which customers have made the most orders and how much did they spend?
 
 SELECT
     customers.CustomerID,
@@ -94,7 +94,7 @@ ORDER BY
     num_orders DESC,
     BillingCountry;
 
-# Retreieve the invoices and their corresponding sales agent.
+#8. Retreieve the invoices and their corresponding sales agent.
 
 SELECT 
     invoices.InvoiceID,
@@ -113,7 +113,7 @@ ON
 ORDER BY
     invoices.InvoiceID;
 
-# How many Invoices were there in 2009?
+#9. How many Invoices were there in 2009?
 
 SELECT
     COUNT(InvoiceID) AS num_invoices
@@ -122,7 +122,7 @@ FROM
 WHERE
     InvoiceDate LIKE '%2009%';
 
-# What are the total sales for 2009?
+#10. What are the total sales for 2009?
 
 SELECT
     (substr(InvoiceDate,1,4)) as year,
@@ -132,7 +132,7 @@ FROM
 WHERE
     year LIKE '%2009%';
 
-# Which year had the most invoices?
+#11. Which year had the most invoices?
 
 SELECT
     (substr(InvoiceDate,1,4)) as year,
@@ -144,7 +144,7 @@ GROUP BY
 ORDER BY
     num_invoices DESC;
 
-# Retreieve purchased tracks and their corresponding invoice ID. 
+#12. Retreieve purchased tracks and their corresponding invoice ID. 
 
 SELECT
     tracks.TrackID,
@@ -159,7 +159,7 @@ ON
 ORDER BY
     tracks.TrackID;
 
-# Write a query that includes the purchased track name AND artist name with each invoice line ID.
+#13. Write a query that includes the purchased track name AND artist name with each invoice line ID.
 /* In order to get the artist name, we need to first link the albums table since this has a foreign key in the artists table and the tracks table */
 
 SELECT
@@ -181,7 +181,7 @@ LEFT JOIN
 ON
     albums.ArtistID = artists.ArtistID;
 
-# Provide a query that shows all the Tracks, and include the Album name, Media type, and Genre.
+#14. Provide a query that shows all the Tracks, and include the Album name, Media type, and Genre.
 
 SELECT
     tracks.Name AS track_name,
@@ -203,7 +203,7 @@ JOIN
 ON
     tracks.MediaTypeID = media_types.MediaTypeID;
 
-# Show the total sales made by each sales agent.
+#15. Show the total sales made by each sales agent.
 
 SELECT
     employees.EmployeeID,
@@ -225,7 +225,7 @@ WHERE
 GROUP BY
     employees.EmployeeID;
 
-# Which sales agent made the most dollars in sales in 2009?
+#16. Which sales agent made the most dollars in sales in 2009?
 
 SELECT
     employees.EmployeeID,
@@ -250,7 +250,7 @@ GROUP BY
 ORDER BY
     total_sales DESC;
     
-# Which playlists have the most items?
+#17. Which playlists have the most items?
 
 SELECT
     playlists.Name AS playlist_type,
@@ -266,7 +266,7 @@ GROUP BY
 ORDER BY
     num_items DESC;
 
-# What are the names of the songs in the "Music" playlist?
+#18. What are the names of the songs in the "Music" playlist?
 
 SELECT 
     tracks.Name AS track_name
@@ -283,7 +283,7 @@ ON
 WHERE
     playlists.Name = "Music";
 
-# What is the most purchased media type and how much money has each media type made?
+#19. What is the most purchased media type and how much money has each media type made?
 
 SELECT
     media_types.Name,
@@ -304,7 +304,7 @@ GROUP BY
 ORDER BY
     num_purchases DESC;
 
-# What is the most purchased genre?
+#20. What is the most purchased genre?
 
 SELECT
     genres.Name,
@@ -325,7 +325,7 @@ GROUP BY
 ORDER BY
     num_purchases DESC;
 
-# Retrieve how many times each track has been purchased.
+#21. Retrieve how many times each track has been purchased.
 
 SELECT
     tracks.Name AS track_name,
@@ -341,7 +341,7 @@ GROUP BY
 ORDER BY
     num_purchases DESC;
 
-# Retrieve the names of the customers who have purchased each track.
+#22. Retrieve the names of the customers who have purchased each track.
 
 SELECT
     tracks.Name AS track_name,
@@ -365,7 +365,7 @@ ON
 ORDER BY
     track_name;
 
-# Retrieve the song title, the artist who created it, the album it is from, the genre, and the media type.
+#23. Retrieve the song title, the artist who created it, the album it is from, the genre, and the media type.
 
 SELECT
     tracks.Name AS track_name,
@@ -394,7 +394,7 @@ ON
 ORDER BY
     album_title;
 
-# Which albums have the most tracks?
+#24. Which albums have the most tracks?
 
 SELECT
     albums.Title AS album_title,
