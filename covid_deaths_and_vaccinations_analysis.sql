@@ -19,6 +19,7 @@ ORDER BY
 
 #2. What is the cumulative death rate (total cases / total deaths) per country from 2020 to 2023?
 
+
 SELECT
   location,
   ROUND((total_deaths/total_cases)*100,2) AS death_rate
@@ -26,8 +27,8 @@ FROM
   (
   SELECT
     location,
-    SUM(total_cases) AS total_cases,
-    SUM(total_deaths) AS total_deaths
+    SUM(new_cases) AS total_cases,
+    SUM(new_deaths) AS total_deaths
   FROM
     covid_data.covid_deaths
   WHERE
@@ -37,8 +38,11 @@ FROM
   GROUP BY
     location
   )
+WHERE
+  total_cases != 0
 ORDER BY
   death_rate DESC;
+
 
 #3. What percent of each country's population was infected with Covid-19 per day?
 
