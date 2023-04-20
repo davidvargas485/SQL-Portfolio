@@ -97,7 +97,21 @@ GROUP BY
 ORDER BY
   death_count DESC;
 
-#6. How many total cases have there been in the world? How many deaths? What is the global death rate for Covid-19?
+#6. Which continents/ regions have had the highest death counts?
+
+SELECT
+  continent,
+  MAX(total_deaths) AS death_count
+FROM
+  covid_data.covid_deaths
+WHERE
+  continent IS NOT NULL
+GROUP BY
+  continent
+ORDER BY
+  death_count DESC;
+
+#7. How many total cases have there been in the world? How many deaths? What is the global death rate for Covid-19?
 
 SELECT
   SUM(new_cases) AS total_cases,
@@ -110,7 +124,7 @@ WHERE
     'World', 'High income', 'Upper middle income', 'Lower middle income', 'European Union', 'Europe', 'Asia', 'North America', 
     'South America')
 
-#7. Demonstrate the increasing number of people vaccinated for each country and what percent of the population this is.
+#8. Demonstrate the increasing number of people vaccinated for each country and what percent of the population this is.
 
 SELECT  
   continent, location, date, population, new_vaccinations,rolling_people_vaccinated,
@@ -140,3 +154,25 @@ FROM (
     cd.date
   )
 
+#9. Using a CTE to double check the above SQL.
+
+With vaxCTE AS (
+SELECT
+  cd.continent, cd.location, cd.date, cd.population, cv.new_vaccinations,
+  SUM(cv.new_vaccinations) OVER (Partition by cd.Location Order by cd.location, cd.Date) AS    
+  rolling_people_vaccinated
+FROM 
+  covid_data.covid_deaths AS cd
+JOIN 
+  covid_data.covid_vax AS cv
+ON
+  cd.location = cv.location AND
+  cd.date = cv.date
+WHERE 
+  cd.continent IS NOT NULL
+ORDER BY
+  cd.location,
+  cd.date
+)
+SELECT *, (rolling_people_vaccinated/population)*100 AS rolling_percent_vaccinated
+FROM vaxCTE
