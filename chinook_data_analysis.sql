@@ -1,3 +1,6 @@
+# In this SQL, I'm querying a digital media store's relational database (with multiple tables) to retrieve information about products, sales, customers, 
+# and employees.
+
 #1. Show Customers (their full names, customer ID, and country) who are not in the US. (Hint: != or <> can be used to say "is not equal to").
 
 SELECT 
